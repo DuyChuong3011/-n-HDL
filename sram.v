@@ -17,7 +17,7 @@ module sram(
 
 reg [`RAM_WIDTH-1:0] mem [`RAM_DEPTH-1:0];
 
-always @(posedge clk) begin // ĐÃ SỬA LỖI: Thêm begin
+always @(posedge clk) begin
     if (en) begin
         if (we) begin       
             mem[addr] <= data_in;
@@ -25,6 +25,6 @@ always @(posedge clk) begin // ĐÃ SỬA LỖI: Thêm begin
             data_out <= mem[addr];
         end
     end
-end // ĐÃ SỬA LỖI: Thêm end
+end
 
 endmodule

@@ -37,8 +37,10 @@ $(INPUT_MEM): $(INPUT_PNG) $(PY_CONVERT_IN)
 
 # --- Mục tiêu Dọn dẹp ---
 clean:
-	@echo "Clean up intermediate and output files..."
-	-del $(OUTPUT_PNG) $(OUTPUT_MEM) $(INPUT_MEM) vsim.wlf
-	-rmdir /s /q $(VSIM_LIB)
+# Xóa các file (sử dụng lệnh rm -f)
+	-rm -f $(OUTPUT_PNG) $(OUTPUT_MEM) $(INPUT_MEM) vsim.wlf
+	
+# Xóa thư mục làm việc của ModelSim (sử dụng lệnh rm -rf)
+	-rm -rf $(VSIM_LIB)
 	
 .PHONY: all clean

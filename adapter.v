@@ -21,7 +21,7 @@ reg [15:0] addr;
 reg [7:0] mem_in;       
 wire [7:0] mem_out;    
 
-// Khối Logic Tuần tự (FSM & Tăng Tọa độ)
+// Sequential Logic Block (FSM & Coordinate Increment)
 always @(posedge clk or posedge rst) begin
     if (rst) begin
         x <= 8'd0;
@@ -38,7 +38,7 @@ always @(posedge clk or posedge rst) begin
     end
 end
 
-// Khối Logic Tổ hợp (Tính next_x và next_y)
+// Combinational Logic Block (Calculating next_x and next_y)
 always @(*) begin
     if (x == (`IMG_W - 1)) begin 
         next_x = 8'd0;           
@@ -49,7 +49,7 @@ always @(*) begin
     end
 end
 
-// Ánh xạ Địa chỉ và Dữ liệu
+// Address and Data Mapping
 assign mem_in = data_in;
 assign data_out = mem_out;
 
@@ -57,7 +57,7 @@ assign addr = (mode == 1'b0) ?
               {y, x} : 
               {x, `H_MINUS_1 - y}; 
 
-// Khối Khởi tạo SRAM
+// SRAM Initialization Block
 sram ram (
     .clk(clk),
     .en(1'b1),      

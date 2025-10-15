@@ -6,7 +6,7 @@
 
 module adapter_tb;
 
-// --- Khai báo Top-level (ĐÃ SỬA LỖI: Không còn lỗi Illegal declaration) ---
+// --- Declare Top-level ---
 reg clk = 1'b0;
 reg rst = 1'b1;
 reg mode = 1'b0; 
@@ -16,14 +16,13 @@ wire [7:0] tb_data_out;
 wire jump_out;
 wire output_done;
 
-// Khai báo Integer và File Descriptor ở Top-level
+// Declare Integer and File Descriptor at Top-level
 reg [7:0] input_mem [`RAM_DEPTH-1:0]; 
 integer output_file;
 integer i;
 integer output_index;
 
-
-// Kết nối với Module Adapter (UUT)
+//Connect to the Adapter Module (UUT)
 adapter UUT (
     .clk(clk),
     .rst(rst),
@@ -34,7 +33,7 @@ adapter UUT (
     .output_done(output_done)
 );
 
-// --- 1. Tạo Clock và Reset ---
+// --- 1. Create Clock and Reset ---
 always #10 clk = ~clk;
 
 initial begin
@@ -48,15 +47,15 @@ initial begin
     rst = 1'b0;
 end
 
-// --- 2. Giai đoạn Mô phỏng chính ---
+// --- 2. Main Simulation Phase ---
 initial begin
     
-    // Nạp dữ liệu ảnh từ file .mem 
+    // Load image data from the .mem file 
     $readmemh("input_test.mem", input_mem); 
     
     @(negedge rst); 
 
-    // --- PHASE 1: Nạp ảnh vào SRAM (mode=0, Ghi) ---
+    // --- PHASE 1: Load image into SRAM (mode=0, Write) ---
     mode = 1'b0; 
     
     for (i = 0; i < `RAM_DEPTH; i = i + 1) begin
@@ -65,24 +64,24 @@ initial begin
         end
     end
 
-    // --- PHASE 2: Bắt đầu Xoay và Xuất ảnh (mode=1) ---
+    // --- PHASE 2: Start Rotating and Outputting the Image (mode=1) ---
     #50; 
     
     mode = 1'b1; 
     output_index = 0;
     
-    // Mở file output chỉ để ghi raw hex data
+    // Open the output file only to write raw hex data
     output_file = $fopen("output_rotated.mem", "w");
     
-    // Vòng lặp chính để đọc pixel đã xoay và ghi vào file
+    // Main loop to read rotated pixels and write to file
     for (output_index = 0; output_index < `RAM_DEPTH; output_index = output_index + 1) begin
         @(posedge clk) begin
-            // Ghi dữ liệu 8-bit (2 ký tự hex) trực tiếp vào file.
+            // Write 8-bit data (2 hex characters) directly to the file.
             $fdisplay(output_file, "%h", tb_data_out); 
         end
     end 
     
-    // Đóng file và kết thúc mô phỏng
+    // Close the file and end the simulation.
     @(posedge clk) begin
         $fclose(output_file);
         $finish;
