@@ -1,0 +1,22 @@
+C:/Users/Admin/OneDrive/Documents/HOC_BAI/HDL/Verilog/adapter.v {1 {vlog -work work -stats=none C:/Users/Admin/OneDrive/Documents/HOC_BAI/HDL/Verilog/adapter.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module adapter
+
+Top level modules:
+	adapter
+
+} {} {}} C:/Users/Admin/OneDrive/Documents/HOC_BAI/HDL/Verilog/adapter_tb.v {1 {vlog -work work -stats=none C:/Users/Admin/OneDrive/Documents/HOC_BAI/HDL/Verilog/adapter_tb.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module adapter_tb
+
+Top level modules:
+	adapter_tb
+
+} {} {}} C:/Users/Admin/OneDrive/Documents/HOC_BAI/HDL/Verilog/sram.v {1 {vlog -work work -stats=none C:/Users/Admin/OneDrive/Documents/HOC_BAI/HDL/Verilog/sram.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module sram
+
+Top level modules:
+	sram
+
+} {} {}}
