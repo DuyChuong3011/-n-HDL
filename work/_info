@@ -10,7 +10,7 @@ z2
 cModel Technology
 Z0 dC:/Users/Admin/OneDrive/Documents/HOC_BAI/HDL_Project
 vadapter
-Z1 !s110 1760544201
+Z1 !s110 1760546239
 !i10b 1
 !s100 U9QK[VAioJk@CFQ:A>X>R2
 Z2 !s11b Dg1SIo80bB@j0V0VzS_@n1
@@ -26,7 +26,7 @@ Z4 OV;L;2020.1;71
 r1
 !s85 0
 31
-Z5 !s108 1760544201.000000
+Z5 !s108 1760546239.000000
 !s107 adapter_tb.v|adapter.v|sram.v|
 Z6 !s90 sram.v|adapter.v|adapter_tb.v|
 !i113 1
