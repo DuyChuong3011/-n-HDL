@@ -1,29 +1,16 @@
-vsim -gui work.adapter_tb
-# vsim -gui work.adapter_tb 
-# Start time: 13:35:19 on Oct 15,2025
+# vsim -c work.adapter_tb -do "run -all; quit" 
+# Start time: 14:42:55 on Oct 15,2025
 # Loading work.adapter_tb
 # Loading work.adapter
 # Loading work.sram
-# Compile of adapter.v was successful.
-# Compile of adapter_tb.v was successful.
-# Compile of sram.v was successful.
-# 3 compiles, 0 failed with no errors.
-vsim -gui work.adapter_tb
-# End time: 13:38:45 on Oct 15,2025, Elapsed time: 0:03:26
-# Errors: 0, Warnings: 2
-# vsim -gui work.adapter_tb 
-# Start time: 13:38:45 on Oct 15,2025
-# Loading work.adapter_tb
-# Loading work.adapter
-# Loading work.sram
-run -all
+# run -all
 # --- Start Image Rotation Simulation ---
 # Phase 1: Loading         256x        256 image into SRAM (Mode=0)...
 # Load Complete. Starting Output Phase...
 # Phase 2: Rotation started. Writing raw pixel data...
 # Rotation Complete. Final pixel read.
 # --- Output (raw pixel data) saved successfully to output_rotated.mem ---
-# ** Note: $finish    : C:/Users/Admin/OneDrive/Documents/HOC_BAI/HDL/Verilog/adapter_tb.v(108)
+# ** Note: $finish    : adapter_tb.v(108)
 #    Time: 2621490 ns  Iteration: 1  Instance: /adapter_tb
-# 1
-# Break in Module adapter_tb at C:/Users/Admin/OneDrive/Documents/HOC_BAI/HDL/Verilog/adapter_tb.v line 108
+# End time: 14:42:56 on Oct 15,2025, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
