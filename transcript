@@ -1,16 +1,10 @@
 # vsim -c work.adapter_tb -do "run -all; quit" 
-# Start time: 14:42:55 on Oct 15,2025
+# Start time: 15:16:07 on Oct 15,2025
 # Loading work.adapter_tb
 # Loading work.adapter
 # Loading work.sram
 # run -all
-# --- Start Image Rotation Simulation ---
-# Phase 1: Loading         256x        256 image into SRAM (Mode=0)...
-# Load Complete. Starting Output Phase...
-# Phase 2: Rotation started. Writing raw pixel data...
-# Rotation Complete. Final pixel read.
-# --- Output (raw pixel data) saved successfully to output_rotated.mem ---
-# ** Note: $finish    : adapter_tb.v(108)
-#    Time: 2621490 ns  Iteration: 1  Instance: /adapter_tb
-# End time: 14:42:56 on Oct 15,2025, Elapsed time: 0:00:01
+# ** Note: $finish    : adapter_tb.v(88)
+#    Time: 2621510 ns  Iteration: 1  Instance: /adapter_tb
+# End time: 15:16:08 on Oct 15,2025, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0

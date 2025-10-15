@@ -1,18 +1,20 @@
 import sys
 from PIL import Image
+import os
 
-# Đảm bảo ảnh đầu ra có kích thước cố định 
+# --- THAM SỐ CẤU HÌNH ---
 TARGET_SIZE = (256, 256) 
-# Định dạng pixel là 24-bit RGB
+# --- THAM SỐ CẤU HÌNH ---
 
 def convert_png_to_mem(input_path, output_path):
     try:
-        # Mở ảnh và chuyển đổi sang chế độ RGB (24-bit)
+        # Mở ảnh và chuyển đổi SANG GRAYSCALE (8-bit)
         with Image.open(input_path) as img:
-            # Thay đổi kích thước và đảm bảo là ảnh RGB
-            img = img.resize(TARGET_SIZE).convert('RGB')
+            # Thay đổi kích thước và CHUYỂN ĐỔI sang chế độ 'L' (Luminance/Grayscale)
+            # Chế độ 'L' là ảnh thang độ xám 8-bit.
+            img = img.resize(TARGET_SIZE, Image.Resampling.LANCZOS).convert('L')
             
-            # Lấy dữ liệu pixel
+            # Dữ liệu pixel bây giờ chỉ là một giá trị 8-bit duy nhất cho mỗi pixel
             pixel_data = list(img.getdata())
 
     except FileNotFoundError:
@@ -22,27 +24,21 @@ def convert_png_to_mem(input_path, output_path):
         print(f"Lỗi khi xử lý ảnh: {e}")
         return
 
-    # Ghi dữ liệu pixel ra tệp .mem
+    # Ghi dữ liệu pixel 8-bit ra tệp .mem
     with open(output_path, 'w') as f:
-        print(f"Bắt đầu ghi {len(pixel_data)} pixel ra {output_path}...")
+        print(f"Bắt đầu ghi {len(pixel_data)} pixel 8-bit ra {output_path}...")
         
-        for r, g, b in pixel_data:
-            # Ghép 3 kênh 8-bit thành một giá trị 24-bit: RRRR GGGG BBBB
-            # Tương đương với (R << 16) | (G << 8) | B
-            rgb_value = (r << 16) | (g << 8) | b
-            
-            # Ghi ra tệp ở định dạng thập lục phân (hex), ModelSim đọc theo từng dòng
-            # Ví dụ: ffe0c0 (Màu hồng)
-            f.write(f"{rgb_value:06x}\n")
+        for value in pixel_data:
+            # Ghi giá trị 8-bit (0x00 đến 0xFF) ra tệp ở định dạng thập lục phân (hex)
+            # %02x đảm bảo giá trị luôn có 2 ký tự (ví dụ: 0F thay vì F)
+            f.write(f"{value:02x}\n")
 
     print(f"Đã chuyển đổi thành công. Tệp .mem đã được lưu tại: {output_path}")
 
-# Kiểm tra đầu vào
-if len(sys.argv) != 3:
-    print("Sử dụng: python convert_to_mem.py <đường_dẫn_tới_ảnh_input.png> <tên_tệp_output.mem>")
-    # Dùng ảnh mặc định của đồ án nếu có
-    # Ví dụ: python convert_to_mem.py ./res/lenna.png input_lenna.mem
-else:
-    input_file = sys.argv[1]
-    output_file = sys.argv[2]
-    convert_png_to_mem(input_file, output_file)
+if __name__ == "__main__":
+    if len(sys.argv) != 3:
+        print("Sử dụng: python png2mem.py <đường_dẫn_tới_ảnh_input.png> <tên_tệp_output.mem>")
+    else:
+        input_file = sys.argv[1]
+        output_file = sys.argv[2]
+        convert_png_to_mem(input_file, output_file)

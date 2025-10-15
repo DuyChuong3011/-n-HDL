@@ -10,23 +10,23 @@ z2
 cModel Technology
 dC:/intelFPGA/20.1
 vadapter
-Z0 !s110 1760514172
+Z0 !s110 1760516166
 !i10b 1
-!s100 >ZSC?a<aSiRDYh14269j?3
+!s100 kIk7hnMQAAQYfa@82FEjo2
 Z1 !s11b Dg1SIo80bB@j0V0VzS_@n1
-I7ah782^a<zmf[hUJREA;62
+I<DR`9K3k<BXdobGAYf2AD1
 Z2 VDg1SIo80bB@j0V0VzS_@n1
 Z3 dC:/Users/Admin/OneDrive/Documents/HOC_BAI/HDL_Project
-w1759934677
+w1760516146
 8adapter.v
 Fadapter.v
-!i122 6
-L0 9 79
+!i122 8
+L0 8 63
 Z4 OV;L;2020.1;71
 r1
 !s85 0
 31
-Z5 !s108 1760514172.000000
+Z5 !s108 1760516166.000000
 !s107 adapter_tb.v|adapter.v|sram.v|
 Z6 !s90 sram.v|adapter.v|adapter_tb.v|
 !i113 1
@@ -34,16 +34,16 @@ Z7 tCvgOpt 0
 vadapter_tb
 R0
 !i10b 1
-!s100 2VBcCkP:@f52PQD>G=Yzc2
+!s100 dAbW?Nb5S1lGdQNldSLdN3
 R1
-IXcmgGS84=Ie>?2M=5CkZT0
+IHW[kSjnF8=MAm=QnO;nnl3
 R2
 R3
-w1760105137
+w1760516158
 8adapter_tb.v
 Fadapter_tb.v
-!i122 6
-L0 7 106
+!i122 8
+L0 7 86
 R4
 r1
 !s85 0
@@ -56,16 +56,16 @@ R7
 vsram
 R0
 !i10b 1
-!s100 n82_[5cf9eFNPikeG5a?h1
+!s100 kaE51ATA^Td`4fWK<i]Q_1
 R1
-IQeg`=R<9@6dHW_do69j092
+IFRCf??mZIWGEO?2:m^o2m1
 R2
 R3
-w1759934725
+w1760516135
 8sram.v
 Fsram.v
-!i122 6
-L0 10 24
+!i122 8
+L0 9 22
 R4
 r1
 !s85 0
