@@ -37,10 +37,10 @@ $(INPUT_MEM): $(INPUT_PNG) $(PY_CONVERT_IN)
 
 # --- Mục tiêu Dọn dẹp ---
 clean:
-# Xóa các file (sử dụng lệnh rm -f)
-	-rm -f $(OUTPUT_PNG) $(OUTPUT_MEM) $(INPUT_MEM) vsim.wlf
+# Xóa các file output (Sử dụng lệnh DEL của Windows)
+	-del $(OUTPUT_PNG) $(OUTPUT_MEM) $(INPUT_MEM) vsim.wlf
 	
 # Xóa thư mục làm việc của ModelSim (sử dụng lệnh rm -rf)
-	-rm -rf $(VSIM_LIB)
+	-rmdir /s /q $(VSIM_LIB)
 	
 .PHONY: all clean
