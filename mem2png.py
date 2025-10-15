@@ -3,8 +3,8 @@ from PIL import Image
 import os
 
 # --- THAM SỐ CẤU HÌNH ---
-IMG_WIDTH = 256
-IMG_HEIGHT = 256
+IMG_WIDTH = 512
+IMG_HEIGHT = 512
 PIXEL_COUNT = IMG_WIDTH * IMG_HEIGHT
 # --- THAM SỐ CẤU HÌNH ---
 

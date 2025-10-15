@@ -10,23 +10,23 @@ z2
 cModel Technology
 Z0 dC:/Users/Admin/OneDrive/Documents/HOC_BAI/HDL_Project
 vadapter
-Z1 !s110 1760519002
+Z1 !s110 1760544201
 !i10b 1
-!s100 kIk7hnMQAAQYfa@82FEjo2
+!s100 U9QK[VAioJk@CFQ:A>X>R2
 Z2 !s11b Dg1SIo80bB@j0V0VzS_@n1
-I<DR`9K3k<BXdobGAYf2AD1
+IdQGd:X]e7RaGVk[4QDj6P1
 Z3 VDg1SIo80bB@j0V0VzS_@n1
 R0
-w1760518948
+w1760544126
 8adapter.v
 Fadapter.v
 !i122 0
-L0 8 63
+L0 8 68
 Z4 OV;L;2020.1;71
 r1
 !s85 0
 31
-Z5 !s108 1760519002.000000
+Z5 !s108 1760544201.000000
 !s107 adapter_tb.v|adapter.v|sram.v|
 Z6 !s90 sram.v|adapter.v|adapter_tb.v|
 !i113 1
@@ -34,12 +34,12 @@ Z7 tCvgOpt 0
 vadapter_tb
 R1
 !i10b 1
-!s100 cDmLKD^MUkB9l53aSSic=0
+!s100 T9l2;k3Ubd[C`3=DQ8flK0
 R2
-IEQo:[9LU`Dm^>?<7E`=hm0
+I_gmDJDA7o3XOLEJk66f]F1
 R3
 R0
-w1760518849
+w1760544143
 8adapter_tb.v
 Fadapter_tb.v
 !i122 0
@@ -56,12 +56,12 @@ R7
 vsram
 R1
 !i10b 1
-!s100 kaE51ATA^Td`4fWK<i]Q_1
+!s100 18PJK:_b0V9_Mo6@[TeQP2
 R2
-IFRCf??mZIWGEO?2:m^o2m1
+I8^bSnRzz:0a92AKT]EJg02
 R3
 R0
-w1760518341
+w1760544108
 8sram.v
 Fsram.v
 !i122 0
