@@ -2,7 +2,7 @@
 
 `define IMG_W 1024    
 `define IMG_H 1024    
-`define RAM_DEPTH 1048576 
+`define RAM_DEPTH (`IMG_W * `IMG_H) 
 `define ADDR_SZ 20    
 `define RAM_WIDTH 8   
 

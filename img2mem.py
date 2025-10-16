@@ -6,7 +6,6 @@ import os
 TARGET_SIZE = (1024, 1024) 
 # -------------------------
 
-# Đổi tên hàm để phản ánh chức năng chung hơn
 def convert_img_to_mem(input_path, output_path):
     # Kiểm tra xem file có tồn tại không
     if not os.path.exists(input_path):
@@ -14,13 +13,12 @@ def convert_img_to_mem(input_path, output_path):
         return
 
     try:
-        # Mở ảnh. Pillow tự động xử lý các định dạng PNG, JPG, BMP, v.v.
         with Image.open(input_path) as img:
             # 1. Chuyển đổi sang Grayscale (8-bit)
             img = img.convert('L') 
             W_S, H_S = img.size 
             
-            # 2. Tính toán tỷ lệ co giãn (proportional resize)
+            # 2. Tính toán tỷ lệ co giãn 
             ratio = min(TARGET_SIZE[0] / W_S, TARGET_SIZE[1] / H_S)
             new_W = int(W_S * ratio)
             new_H = int(H_S * ratio)
@@ -28,7 +26,7 @@ def convert_img_to_mem(input_path, output_path):
             # 3. Đổi kích thước ảnh
             img_resized = img.resize((new_W, new_H), Image.Resampling.LANCZOS)
             
-            # 4. Tạo khung hình mới 512x512 với nền Đen (padding)
+            # 4. Tạo khung hình mới 1024x1024 với nền Đen 
             new_img = Image.new('L', TARGET_SIZE, 0) 
             x_offset = (TARGET_SIZE[0] - new_W) // 2
             y_offset = (TARGET_SIZE[1] - new_H) // 2

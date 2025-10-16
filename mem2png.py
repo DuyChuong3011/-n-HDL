@@ -6,7 +6,7 @@ import os
 IMG_WIDTH = 1024
 IMG_HEIGHT = 1024
 PIXEL_COUNT = IMG_WIDTH * IMG_HEIGHT
-# --- THAM SỐ CẤU HÌNH ---
+# ------------------------
 
 def convert_mem_to_image(input_path, output_path):
     pixel_data = []

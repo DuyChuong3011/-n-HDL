@@ -1,10 +1,10 @@
 # --- Cấu hình Dự án ---
 # Tên các file cần thiết
 VERILOG_SRC = sram.v adapter.v adapter_tb.v
-INPUT_IMG = hcmut.png
+INPUT_IMG = test_3.jpg
 INPUT_MEM = input_test.mem
 OUTPUT_MEM = output_rotated.mem
-OUTPUT_PNG = output_test.png
+OUTPUT_PNG = output_test_3.png
 PY_CONVERT_IN = img2mem.py
 PY_CONVERT_OUT = mem2png.py
 VSIM_LIB = work
@@ -30,7 +30,7 @@ $(OUTPUT_MEM): $(VERILOG_SRC) $(INPUT_MEM)
 	vsim -c $(VSIM_LIB).adapter_tb -do "run -all; quit"
 	@echo "ModelSim finished. File $(OUTPUT_MEM) created."
 
-# 3. Chuyển đổi PNG sang MEM (Pha Tiền xử lý)
+# 3. Chuyển đổi IMG sang MEM (Pha Tiền xử lý)
 $(INPUT_MEM): $(INPUT_IMG) $(PY_CONVERT_IN)
 	@echo "--- 1. Convert PNG to MEM: Starting ---"
 	$(PYTHON_CMD) $(PY_CONVERT_IN) $(INPUT_IMG) $(INPUT_MEM)

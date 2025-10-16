@@ -2,7 +2,7 @@
 
 `define IMG_W 1024
 `define IMG_H 1024
-`define RAM_DEPTH (`IMG_W * `IMG_H) // 1048576
+`define RAM_DEPTH (`IMG_W * `IMG_H) 
 
 module adapter_tb;
 
@@ -17,7 +17,7 @@ wire jump_out;
 wire output_done;
 
 // --- Khai báo Mảng Bộ nhớ và Biến Đếm ---
-reg [7:0] input_mem [`RAM_DEPTH-1:0]; // 1024*1024 phần tử
+reg [7:0] input_mem [`RAM_DEPTH-1:0]; 
 integer output_file;
 integer i;
 integer output_index;
