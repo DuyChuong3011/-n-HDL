@@ -1,16 +1,16 @@
 `timescale 1ns / 1ps
 
-`define IMG_W 512     // Kích thước ảnh 512
-`define IMG_H 512     // Kích thước ảnh 512
-`define RAM_DEPTH 262144 // 512 * 512
-`define ADDR_SZ 18    // 18 bit địa chỉ (2^18)
-`define RAM_WIDTH 8   // Grayscale 8-bit
+`define IMG_W 1024    
+`define IMG_H 1024    
+`define RAM_DEPTH 1048576 
+`define ADDR_SZ 20    
+`define RAM_WIDTH 8   
 
 module sram(
     input clk, 
     input en,       
     input we,       
-    input [`ADDR_SZ-1:0] addr, // Bus địa chỉ 18-bit
+    input [`ADDR_SZ-1:0] addr, // Bus địa chỉ 20-bit
     input [`RAM_WIDTH-1:0] data_in,
     output reg [`RAM_WIDTH-1:0] data_out
 );

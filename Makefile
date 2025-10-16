@@ -1,10 +1,10 @@
 # --- Cấu hình Dự án ---
 # Tên các file cần thiết
 VERILOG_SRC = sram.v adapter.v adapter_tb.v
-INPUT_IMG = test_2.jpg
+INPUT_IMG = hcmut.png
 INPUT_MEM = input_test.mem
 OUTPUT_MEM = output_rotated.mem
-OUTPUT_PNG = output_test_2.png
+OUTPUT_PNG = output_test.png
 PY_CONVERT_IN = img2mem.py
 PY_CONVERT_OUT = mem2png.py
 VSIM_LIB = work

@@ -3,7 +3,7 @@ from PIL import Image
 import os
 
 # --- THAM SỐ CẤU HÌNH ---
-TARGET_SIZE = (512, 512) 
+TARGET_SIZE = (1024, 1024) 
 # -------------------------
 
 # Đổi tên hàm để phản ánh chức năng chung hơn

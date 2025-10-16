@@ -1,8 +1,8 @@
 `timescale 1ns / 1ps
 
-`define IMG_W 512
-`define IMG_H 512
-`define RAM_DEPTH (`IMG_W * `IMG_H) // 262144
+`define IMG_W 1024
+`define IMG_H 1024
+`define RAM_DEPTH (`IMG_W * `IMG_H) // 1048576
 
 module adapter_tb;
 
@@ -17,7 +17,7 @@ wire jump_out;
 wire output_done;
 
 // --- Khai báo Mảng Bộ nhớ và Biến Đếm ---
-reg [7:0] input_mem [`RAM_DEPTH-1:0]; 
+reg [7:0] input_mem [`RAM_DEPTH-1:0]; // 1024*1024 phần tử
 integer output_file;
 integer i;
 integer output_index;
@@ -58,7 +58,7 @@ initial begin
     // --- PHASE 1: Nạp ảnh vào SRAM ---
     mode = 1'b0; 
     
-    // Nạp 262144 pixel
+    // Nạp 1.048.576 pixel
     for (i = 0; i < `RAM_DEPTH; i = i + 1) begin
         @(posedge clk) begin
             tb_data_in = input_mem[i];
@@ -76,7 +76,6 @@ initial begin
     // Vòng lặp chính để đọc pixel đã xoay và ghi vào file
     for (output_index = 0; output_index < `RAM_DEPTH; output_index = output_index + 1) begin
         @(posedge clk) begin
-            // Ghi dữ liệu 8-bit (2 ký tự hex) trực tiếp vào file.
             $fdisplay(output_file, "%h", tb_data_out); 
         end
     end 

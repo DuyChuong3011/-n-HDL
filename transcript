@@ -1,10 +1,10 @@
 # vsim -c work.adapter_tb -do "run -all; quit" 
-# Start time: 23:37:20 on Oct 15,2025
+# Start time: 23:55:34 on Oct 15,2025
 # Loading work.adapter_tb
 # Loading work.adapter
 # Loading work.sram
 # run -all
-# ** Note: $finish    : adapter_tb.v(87)
-#    Time: 10485830 ns  Iteration: 1  Instance: /adapter_tb
-# End time: 23:37:22 on Oct 15,2025, Elapsed time: 0:00:02
+# ** Note: $finish    : adapter_tb.v(86)
+#    Time: 41943110 ns  Iteration: 1  Instance: /adapter_tb
+# End time: 23:55:40 on Oct 15,2025, Elapsed time: 0:00:06
 # Errors: 0, Warnings: 0
