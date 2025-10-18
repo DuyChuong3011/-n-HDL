@@ -17,10 +17,10 @@ all: $(OUTPUT_PNG)
 
 # --- Các Pha Xử lý ---
 
-# 1. Chuyển đổi MEM sang PNG (Pha Hậu xử lý)
-$(OUTPUT_PNG): $(OUTPUT_MEM) $(PY_CONVERT_OUT)
-	@echo "--- 3. Convert MEM to PNG: Starting ---"
-	$(PYTHON_CMD) $(PY_CONVERT_OUT) $(OUTPUT_MEM) $(OUTPUT_PNG)
+# 1. Chuyển đổi IMG sang MEM (Pha Tiền xử lý)
+$(INPUT_MEM): $(INPUT_IMG) $(PY_CONVERT_IN)
+	@echo "--- 1. Convert PNG to MEM: Starting ---"
+	$(PYTHON_CMD) $(PY_CONVERT_IN) $(INPUT_IMG) $(INPUT_MEM)
 
 # 2. Chạy Mô phỏng ModelSim (Pha Xử lý Verilog)
 $(OUTPUT_MEM): $(VERILOG_SRC) $(INPUT_MEM)
@@ -30,10 +30,10 @@ $(OUTPUT_MEM): $(VERILOG_SRC) $(INPUT_MEM)
 	vsim -c $(VSIM_LIB).adapter_tb -do "run -all; quit"
 	@echo "ModelSim finished. File $(OUTPUT_MEM) created."
 
-# 3. Chuyển đổi IMG sang MEM (Pha Tiền xử lý)
-$(INPUT_MEM): $(INPUT_IMG) $(PY_CONVERT_IN)
-	@echo "--- 1. Convert PNG to MEM: Starting ---"
-	$(PYTHON_CMD) $(PY_CONVERT_IN) $(INPUT_IMG) $(INPUT_MEM)
+# 3. Chuyển đổi MEM sang PNG (Pha Hậu xử lý)
+$(OUTPUT_PNG): $(OUTPUT_MEM) $(PY_CONVERT_OUT)
+	@echo "--- 3. Convert MEM to PNG: Starting ---"
+	$(PYTHON_CMD) $(PY_CONVERT_OUT) $(OUTPUT_MEM) $(OUTPUT_PNG)
 
 # --- Mục tiêu Dọn dẹp ---
 clean:
