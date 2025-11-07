@@ -8,7 +8,7 @@
 module adapter(
     input clk,
     input rst,
-    input mode,              
+    input [1:0] op_mode,              
     input [7:0] data_in,    
     output [7:0] data_out,  
     output reg jump_out,     
@@ -35,8 +35,8 @@ always @(posedge clk or posedge rst) begin
         
         jump_out <= (next_x == 10'd0) ? 1'b1 : 1'b0;
 
-        // Hoàn thành khi quét hết ảnh (x=1023, y=1023)
-        output_done <= (x == `H_MINUS_1 && y == `H_MINUS_1 && mode == 1'b1) ? 1'b1 : 1'b0;
+        // Hoàn thành khi quét hết ảnh VÀ ở chế độ Đọc/Xoay/Phản chiếu (op_mode != 2'b00)
+        output_done <= (x == `H_MINUS_1 && y == `H_MINUS_1 && op_mode != 2'b00) ? 1'b1 : 1'b0;
     end
 end
 
@@ -55,18 +55,29 @@ end
 assign mem_in = data_in;
 assign data_out = mem_out;
 
-// Logic tính toán Địa chỉ RAM: Dùng Nối bit (Concatenation)
-// Addr = {y, x}
-// Xoay CCW: Addr = {x, H-1-y}
-assign addr = (mode == 1'b0) ? 
-              {y, x} : 
-              {x, `H_MINUS_1 - y}; 
+// --- LOGIC ÁNH XẠ ĐỊA CHỈ MỚI (Sử dụng Case) ---
+always @(*) begin
+    case (op_mode)
+        2'b00: begin // Ghi (Store/Input): addr = {y, x}
+            addr = {y, x};
+        end
+        2'b01: begin // Xoay CCW (Rotate): addr = {x, 1023 - y}
+            addr = {x, `H_MINUS_1 - y};
+        end
+        2'b10: begin // Phản chiếu Ngang (Horizontal Mirror): addr = {y, 1023 - x}
+            addr = {y, `H_MINUS_1 - x};
+        end
+        default: begin // Mặc định: Ghi/Bỏ qua (Tùy chọn)
+            addr = 20'h00000;
+        end
+    endcase
+end
 
 // Khối Khởi tạo SRAM
 sram ram (
     .clk(clk),
     .en(1'b1),      
-    .we(~mode),     
+    .we(~op_mode[0] & ~op_mode[1]), // WE = 1 chỉ khi op_mode = 2'b00    
     .addr(addr),
     .data_in(mem_in),
     .data_out(mem_out)
