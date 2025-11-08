@@ -6,38 +6,34 @@ import os
 IMG_WIDTH = 1024
 IMG_HEIGHT = 1024
 PIXEL_COUNT = IMG_WIDTH * IMG_HEIGHT
-# ------------------------
+# --- THAM SỐ CẤU HÌNH ---
 
 def convert_mem_to_image(input_path, output_path):
-    pixel_data = []
+    pixel_data_rgb = []
     
     try:
-        # 1. Đọc dữ liệu Hex từ tệp .mem
         with open(input_path, 'r') as f:
             lines = f.readlines()
             
-            line_count = 0
             for line in lines:
                 hex_value = line.strip()
                 if not hex_value:
                     continue
                 
-                # --- LOGIC XỬ LÝ PIXEL ---
+                # --- LOGIC XỬ LÝ PIXEL (Đọc 24-bit) ---
                 try:
-                    # Thử chuyển đổi chuỗi hex 8-bit thành số nguyên
-                    gray_int = int(hex_value, 16)
+                    rgb_int = int(hex_value, 16)
                     
-                    # Giới hạn giá trị trong khoảng 0-255
-                    value = gray_int & 0xFF
+                    # Tách 24-bit thành 3 kênh (R, G, B)
+                    r = (rgb_int >> 16) & 0xFF
+                    g = (rgb_int >> 8) & 0xFF
+                    b = rgb_int & 0xFF
+                    
+                    pixel_data_rgb.append((r, g, b))
                 
                 except ValueError:
-                    # Nếu chuyển đổi thất bại (do chuỗi là "xx" hoặc lỗi khác)
-                    value = 0 # Gán thành Đen
-                # ----------------------------------------------------
-                
-                # Dùng giá trị 8-bit duy nhất cho pixel Grayscale
-                pixel_data.append(value)
-                line_count += 1
+                    # Nếu gặp lỗi hex không hợp lệ, gán màu đen (0, 0, 0)
+                    pixel_data_rgb.append((0, 0, 0))
 
     except FileNotFoundError:
         print(f"Lỗi: Không tìm thấy tệp .mem đầu vào tại {input_path}")
@@ -47,22 +43,21 @@ def convert_mem_to_image(input_path, output_path):
         return
 
     # 2. Tạo đối tượng Image và lưu trữ
-    if len(pixel_data) >= PIXEL_COUNT: 
+    if len(pixel_data_rgb) >= PIXEL_COUNT: 
         try:
-            # Tạo đối tượng ảnh mới với chế độ 'L' (Grayscale)
-            img = Image.new('L', (IMG_WIDTH, IMG_HEIGHT))
+            # TẠO ẢNH Ở CHẾ ĐỘ 'RGB' (3 kênh)
+            img = Image.new('RGB', (IMG_WIDTH, IMG_HEIGHT))
             
-            img.putdata(pixel_data[:PIXEL_COUNT])
+            img.putdata(pixel_data_rgb[:PIXEL_COUNT])
             
-            # Lưu ảnh ra tệp PNG
             img.save(output_path, format="PNG")
             
-            print(f"Thành công! Ảnh đầu ra {IMG_WIDTH}x{IMG_HEIGHT} (Grayscale) đã được lưu tại: {output_path}")
+            print(f"Thành công! Ảnh đầu ra {IMG_WIDTH}x{IMG_HEIGHT} (RGB) đã được lưu tại: {output_path}")
 
         except Exception as e:
             print(f"Lỗi khi tạo hoặc lưu tệp PNG: {e}")
     else:
-        print(f"Lỗi: Số lượng pixel đọc được ({len(pixel_data)}) không khớp với kích thước ảnh {IMG_WIDTH}x{IMG_HEIGHT}.")
+        print(f"Lỗi: Số lượng pixel đọc được ({len(pixel_data_rgb)}) không khớp với kích thước ảnh {IMG_WIDTH}x{IMG_HEIGHT}.")
 
 
 if __name__ == "__main__":

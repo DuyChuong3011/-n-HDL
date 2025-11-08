@@ -1,16 +1,16 @@
-# vsim -c work.adapter_tb "+mode=2" -do "run -all; quit" 
-# Start time: 00:50:20 on Nov 08,2025
+# vsim -c work.adapter_tb "+mode=1" -do "run -all; quit" 
+# Start time: 14:10:33 on Nov 08,2025
 # Loading work.adapter_tb
 # Loading work.adapter
 # Loading work.sram
 # ** Warning: (vsim-PLI-3691) Expected a system task, not a system function '$value$plusargs'.
 #    Time: 0 ps  Iteration: 0  Instance: /adapter_tb File: adapter_tb.v Line: 106
 # run -all
-# Testbench initialized. Mode: 10
-# PHASE 1B: Running Store (00) internally to ensure data integrity...
-# Store Complete. PHASE 2: Transformation Mode Activated: 10. Starting read cycle...
+# Testbench initialized. Mode: 001
+# PHASE 1B: Running Store (000) internally to ensure data integrity...
+# Store Complete. PHASE 2: Transformation Mode Activated: 001. Starting read cycle...
 # Transformation Complete. Output saved to output_transformed.mem
 # ** Note: $finish    : adapter_tb.v(125)
 #    Time: 41943070 ns  Iteration: 1  Instance: /adapter_tb
-# End time: 00:50:27 on Nov 08,2025, Elapsed time: 0:00:07
+# End time: 14:10:42 on Nov 08,2025, Elapsed time: 0:00:09
 # Errors: 0, Warnings: 1

@@ -8,25 +8,27 @@
 module adapter(
     input clk,
     input rst,
-    input [1:0] op_mode,              
-    input [7:0] data_in,    
-    output [7:0] data_out,  
+    input [2:0] op_mode,     // ĐÃ SỬA: 3-bit Operation Mode
+    input [23:0] data_in,    
+    output [23:0] data_out,  
     output reg jump_out,     
     output reg output_done   
 );
 
-// Bus tọa độ 10 bit (0-1023)
 reg [9:0] x, next_x;   
 reg [9:0] y, next_y;   
-reg [19:0] addr;    
-reg [7:0] mem_in;       
-wire [7:0] mem_out;    
+reg [19:0] addr;       
+reg [23:0] mem_in;       
+wire [23:0] mem_out;    
+
+// Khối tính toán hằng số W-1
+localparam W_MINUS_1 = `H_MINUS_1;
 
 // Khối Logic Tuần tự (FSM & Tăng Tọa độ)
 always @(posedge clk or posedge rst) begin
     if (rst) begin
-        x <= 10'd0; // Khởi tạo 10 bit
-        y <= 10'd0; // Khởi tạo 10 bit
+        x <= 10'd0; 
+        y <= 10'd0; 
         jump_out <= 1'b0;
         output_done <= 1'b0;
     end else begin
@@ -35,12 +37,12 @@ always @(posedge clk or posedge rst) begin
         
         jump_out <= (next_x == 10'd0) ? 1'b1 : 1'b0;
 
-        // Hoàn thành khi quét hết ảnh VÀ ở chế độ Đọc/Xoay/Phản chiếu (op_mode != 2'b00)
-        output_done <= (x == `H_MINUS_1 && y == `H_MINUS_1 && op_mode != 2'b00) ? 1'b1 : 1'b0;
+        // Hoàn thành khi quét hết ảnh VÀ không ở chế độ Store (op_mode != 3'b000)
+        output_done <= (x == `H_MINUS_1 && y == `H_MINUS_1 && op_mode != 3'b000) ? 1'b1 : 1'b0;
     end
 end
 
-// Khối Logic Tổ hợp (Tính next_x và next_y)
+// Khối Logic Tổ hợp (Tính next_x và next_y - giữ nguyên)
 always @(*) begin
     if (x == (`IMG_W - 1)) begin 
         next_x = 10'd0;           
@@ -51,24 +53,32 @@ always @(*) begin
     end
 end
 
-// Ánh xạ Địa chỉ và Dữ liệu
 assign mem_in = data_in;
 assign data_out = mem_out;
 
 // --- LOGIC ÁNH XẠ ĐỊA CHỈ MỚI (Sử dụng Case) ---
 always @(*) begin
     case (op_mode)
-        2'b00: begin // Ghi (Store/Input): addr = {y, x}
+        3'b000: begin // Mode 0: Store (Ghi) - {y, x}
             addr = {y, x};
         end
-        2'b01: begin // Xoay CCW (Rotate): addr = {x, 1023 - y}
+        3'b001: begin // Mode 1: Rotate CCW (Xoay Trái 90) - {x, H-1-y}
             addr = {x, `H_MINUS_1 - y};
         end
-        2'b10: begin // Phản chiếu Ngang (Horizontal Mirror): addr = {y, 1023 - x}
-            addr = {y, `H_MINUS_1 - x};
+        3'b010: begin // Mode 2: Rotate CW (Xoay Phải 90) - {W-1-x, y}
+            addr = {W_MINUS_1 - x, y};
         end
-        default: begin // Mặc định: Ghi/Bỏ qua (Tùy chọn)
-            addr = 20'h00000;
+        3'b011: begin // Mode 3: Rotate 180 - {H-1-y, W-1-x}
+            addr = {`H_MINUS_1 - y, W_MINUS_1 - x};
+        end
+        3'b100: begin // Mode 4: Mirror Horiz (Phản chiếu Ngang) - {y, W-1-x}
+            addr = {y, W_MINUS_1 - x};
+        end
+        3'b101: begin // Mode 5: Mirror Vert (Phản chiếu Dọc) - {H-1-y, x}
+            addr = {`H_MINUS_1 - y, x};
+        end
+        default: begin 
+            addr = {y, x}; // Mặc định Ghi/Tuyến tính
         end
     endcase
 end
@@ -77,7 +87,7 @@ end
 sram ram (
     .clk(clk),
     .en(1'b1),      
-    .we(~op_mode[0] & ~op_mode[1]), // WE = 1 chỉ khi op_mode = 2'b00    
+    .we(op_mode == 3'b000), // WE = 1 chỉ khi op_mode = 3'b000 (Store)
     .addr(addr),
     .data_in(mem_in),
     .data_out(mem_out)

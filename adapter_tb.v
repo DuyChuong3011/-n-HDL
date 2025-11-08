@@ -9,19 +9,19 @@ module adapter_tb;
 // --- Khai báo Tín hiệu Testbench ---
 reg clk = 1'b0;
 reg rst = 1'b1;
-reg [1:0] op_mode; 
-reg [7:0] tb_data_in;    
-wire [7:0] tb_data_out;   
+reg [2:0] op_mode; // ĐÃ SỬA: 3-bit mode
+reg [23:0] tb_data_in;    
+wire [23:0] tb_data_out;   
 wire jump_out;
 wire output_done;
 
 // --- Khai báo Mảng Bộ nhớ và Biến Đếm ---
-reg [7:0] input_mem [`RAM_DEPTH-1:0]; 
+reg [23:0] input_mem [`RAM_DEPTH-1:0]; 
 integer output_file;
 integer i;
 integer output_index;
 
-// Biến cho $value$plusargs
+// Biến cho $value$plusargs (Đọc tham số từ terminal)
 integer mode_val = 0; 
 integer scan_ok; 
 
@@ -48,14 +48,14 @@ initial begin
     if (scan_ok) begin
         op_mode = mode_val;
     end else begin
-        op_mode = 2'b00; // Mặc định là Store/Ghi
+        op_mode = 3'b000; // Mặc định là Store/Ghi (0)
     end
     
     // 2. Thiết lập Reset
     i = 0; 
     output_index = 0;
     rst = 1'b1;
-    tb_data_in = 8'h00; 
+    tb_data_in = 24'h000000; 
     #20;
     rst = 1'b0;
     
@@ -71,13 +71,13 @@ initial begin
     
     @(negedge rst); 
 
-    // -----------------------------------------------------------------
-    // LOGIC CHÍNH: Xử lý Ghi và Đọc/Xoay trong cùng một lần chạy vsim
-    // -----------------------------------------------------------------
+    // -----------------------------------------------------
+    // LOGIC CHÍNH: LỰA CHỌN PHA XỬ LÝ
+    // -----------------------------------------------------
     
-    if (op_mode == 2'b00) begin
+    if (op_mode == 3'b000) begin
         // --- PHA 1A: CHẾ ĐỘ GHI DỮ LIỆU (STORE) ---
-        $display("PHASE 1A: Running Store (00) - Loading 1M Pixels...");
+        $display("PHASE 1A: Running Store (000) - Loading 1M Pixels...");
         
         for (i = 0; i < `RAM_DEPTH; i = i + 1) begin
             @(posedge clk) tb_data_in = input_mem[i];
@@ -89,17 +89,17 @@ initial begin
     
     else begin
         // --- PHA 1B: BUỘC GHI LẠI ẢNH (STORE) TRƯỚC KHI XỬ LÝ ---
-        $display("PHASE 1B: Running Store (00) internally to ensure data integrity...");
+        $display("PHASE 1B: Running Store (000) internally to ensure data integrity...");
         
-        // Ghi chú: op_mode đã là chế độ xử lý (01 hoặc 10). Phải tạm thời chuyển về 00 để ghi.
-        op_mode = 2'b00; 
+        // Ghi chú: op_mode đã là chế độ xử lý (001-101). Tạm thời chuyển về 000 để ghi.
+        op_mode = 3'b000; 
         
         for (i = 0; i < `RAM_DEPTH; i = i + 1) begin
             @(posedge clk) tb_data_in = input_mem[i];
         end
         
-        // --- KHẮC PHỤC LỖI MẤT DỮ LIỆU: Đảm bảo đồng bộ hóa Ghi/Đọc ---
-        // Thêm 2 chu kỳ clock delay để đảm bảo pixel cuối cùng đã được ghi vào SRAM
+        // --- KHẮC PHỤC LỖI MẤT DỮ LIỆU (DELAY) ---
+        // Thêm 2 chu kỳ clock delay (20ns) để đảm bảo pixel cuối cùng đã được ghi vào SRAM
         #20; 
         
         // Chuyển lại chế độ xử lý ban đầu (đọc lại giá trị từ $plusargs)

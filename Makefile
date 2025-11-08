@@ -22,10 +22,7 @@ OUTPUT_MEM = output_transformed.mem
 OUTPUT_PNG = out_mode$(MODE).png
 
 # Mục tiêu Chính - ALL sẽ chạy chế độ Mặc định (hoặc chế độ đã đặt)
-all: transform
-
-# Mục tiêu TRỌNG TÂM: Chạy Xử lý (Nạp và Xử lý trong một lần chạy)
-transform: $(OUTPUT_PNG)
+all: $(OUTPUT_PNG)
 
 # --- Các Pha Xử lý ---
 
@@ -51,7 +48,9 @@ $(OUTPUT_PNG): $(OUTPUT_MEM) $(PY_CONVERT_OUT)
 # --- Mục tiêu Dọn dẹp ---
 clean:
 # Xóa các file output (Sử dụng lệnh DEL của Windows)
-	-del $(OUTPUT_PNG) $(OUTPUT_MEM) $(INPUT_MEM) vsim.wlf
+	-del $(OUTPUT_MEM) $(INPUT_MEM) vsim.wlf
+
+	-del out_mode1.png out_mode2.png out_mode3.png out_mode4.png out_mode5.png
 	
 # # Xóa thư mục làm việc của ModelSim (sử dụng lệnh rm -rf)
 # 	-rmdir /s /q $(VSIM_LIB)
