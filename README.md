@@ -20,6 +20,7 @@ Dự án này là thiết kế Verilog HDL cho một bộ tăng tốc phần c�
 Module `adapter.v` được điều khiển bằng bus **`op_mode` (3-bit)**, được truyền qua terminal bằng tham số `+mode=X`.
 
 | `MODE`        | Tên                                 | Phép toán        | Công thức Ánh xạ (Address Mapping)   |
+| :---          | :---                                |:---              |:---                       |
 | **0** (`000`) | **Store** (Ghi)                     | -                | $\{\mathbf{y}, \mathbf{x}\}$         |
 | **1** (`001`) | **Rotate CCW** (Xoay Trái 90°)      | $(H-1-y, x)$     | $\{\mathbf{x}, \mathbf{H-1-y}\}$     |
 | **2** (`010`) | **Rotate CW** (Xoay Phải 90°)       | $(y, W-1-x)$     | $\{\mathbf{W-1-x}, \mathbf{y}\}$     |
@@ -43,6 +44,7 @@ Quy trình chạy tự động hóa bằng `Makefile` và yêu cầu chạy lệ
 Sử dụng lệnh `make all MODE=X` để chạy tự động 3 pha (Convert IMG --> Simulate --> Convert PNG).
 
 | Lệnh Thực thi         | Chế độ              | Ý nghĩa |
+| :---                  | :---                |:---                                                                   |
 | **`make all MODE=1`** | **Rotate CCW**      | Chạy toàn bộ quy trình Xử lý, xuất file **`out_mode1.png`**.          |
 | **`make all MODE=3`** | **Rotate 180°**     | Chạy toàn bộ quy trình Xử lý, xuất file **`out_mode3.png`**.          |
 | **`make store`**      | **Store** (Chỉ Ghi) | Chỉ chạy Pha Ghi (`+mode=0`) để nạp dữ liệu vào SRAM ảo, sau đó dừng. |
