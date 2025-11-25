@@ -1,9 +1,5 @@
 `timescale 1ns / 1ps
 
-`define IMG_W 1024
-`define IMG_H 1024
-`define RAM_DEPTH (`IMG_W * `IMG_H) // 1048576
-
 module adapter_tb;
 
 // --- Khai báo Tín hiệu Testbench ---

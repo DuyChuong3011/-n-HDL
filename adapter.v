@@ -1,8 +1,5 @@
 `timescale 1ns / 1ps
-
-`define IMG_W 1024
-`define IMG_H 1024
-`define ADDR_SZ 20        
+      
 `define H_MINUS_1 10'd1023 
 
 module adapter(
